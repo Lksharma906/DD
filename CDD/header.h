@@ -1,9 +1,19 @@
+#ifndef _HEADERS_H_
+#define _HEADERS_H_
+
 #include<linux/init.h>
 #include<linux/module.h>
 #include<linux/kernel.h>
 #include<linux/fs.h>
 #include<linux/moduleparam.h>
 #include<linux/slab.h>  //For Kmalloc
+#include<linux/cdev.h>
+
+#ifndef KCDEBUG
+#define KCDEBUG
+#endif
+
+
 
 #ifndef BASEMINOR
 #define BASEMINOR 1
@@ -31,15 +41,19 @@ typedef struct Dev
 	/* Struct cdev* is the way to access hardware lying for cdev. 
 	 * For accessing it from our driver we are using it here.
 	 * */
-	struct cdev* mydev;
-        Qset_t* qset;	
+	struct cdev mydev;
+        //Qset_t* qset;	
 } Device_t;
 
 extern Device_t * device;
 
-
-
 MODULE_LICENSE("DUAL GPL/MIT");
 MODULE_AUTHOR("LOKESH SHARMA");
 MODULE_DESCRIPTION("A basic kernel module");
+MODULE_VERSION("1.0");
+
+
+#endif
+
+
 

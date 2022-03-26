@@ -2,7 +2,7 @@ INSTALL_DIR=modules
 ifneq (${KERNELRELEASE},)
 	obj-m:=DD.o
 
-DD-objs := entry_point.o exit_point.o  
+DD-objs := entry_point.o exit_point.o myDeviceOpen.o myDeviceClose.o myDeviceRead.o myDeviceWrite.o 
 
 else
 #	KERNELDIR ?= /lib/modules/5.14.8/build

@@ -1,6 +1,8 @@
+#include"fops.h"
+#include"declarations.h"
 #include"header.h"
 
-dev_t devno;
+dev_t devno,devid;
 Device_t *device;
 
 unsigned baseminor;
@@ -37,9 +39,14 @@ static int __init entry_point(void){
 	    pr_err("kmalloc failed\n");
 	    goto OUT;
     }
+    memset(device,'\0',sizeof(Device_t)*nod);
+
     for(i =0; i<nod; i++)
     {
-	//Need to do individual memory allocation.
+	//Need to do individual memory allocation for each cdev as all devices with different minor no have differnet device entries in device tablel.
+	cdev_init(&device[i].mydev,&fops);
+	devid = MKDEV(basemajor,i);
+	cdev_add(&device[i].mydev,devid,1);
 		
     }
 
