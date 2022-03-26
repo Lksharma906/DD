@@ -26,7 +26,9 @@ insert_driver(){
 		echo "Inserting driver........."
 		read -p "Enter NOD to inserted:" no
 		read -p "Enter Device Size:" dS
-		insmod ./modules/DD.ko nod=$no devSize=$dS
+		read -p "Enter no of Registers:" nR
+		read -p "Enter register Size:" rS
+		insmod ./modules/DD.ko nod=$no devSize=$dS noReg=$nR regSize=$rS
 	fi
 
 }
