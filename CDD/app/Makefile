@@ -4,7 +4,7 @@ CF=-c -Wall -Wextra
 LT=-lpthread
 
 app: app.o open_driver.o write_driver.o read_driver.o close_driver.o nested_driver_access.o
-	$(CC) -o app.arm app.o open_driver.o write_driver.o read_driver.o close_driver.o nested_driver_access.o $(LT)
+	$(CC) -o app app.o open_driver.o write_driver.o read_driver.o close_driver.o nested_driver_access.o $(LT)
 
 app.o: ./header.h
 	$(CC) $(CF) app.c $(LT)

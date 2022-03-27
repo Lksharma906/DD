@@ -46,8 +46,14 @@ static int __init entry_point(void){
 	//Need to do individual memory allocation for each cdev as all devices with different minor no have differnet device entries in device tablel.
 	cdev_init(&device[i].mydev,&fops);
 	devid = MKDEV(basemajor,i);
-	cdev_add(&device[i].mydev,devid,1);
-		
+	ret = cdev_add(&device[i].mydev,devid,1);
+	if(ret == -1)
+	{
+		pr_err("Device add failure %d \n",i);
+	}
+	pr_info("Device added majorno = %d & minorno = %d",
+					basemajor,
+					MINOR(device[i].mydev.dev));	
     }
 
     return 0;

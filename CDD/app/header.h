@@ -48,6 +48,7 @@ typedef struct FILE
 {
     char file_name[FILE_NAME_SIZE];
     int fd;
+    int rdwr_flag;
 }File;
 
 extern File *file;

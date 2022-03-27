@@ -6,7 +6,11 @@ void* open_driver(void* arg){
 #endif
    
     File *file = (File*)arg;
-    file->fd = open(file->file_name,O_RDWR|O_CREAT,0666);
+    if(file->rdwr_flag == 1)// Write only Mode
+        file->fd = open(file->file_name,O_WRONLY);
+    if(file->rdwr_flag == 2)// Read only Mode
+        file->fd = open(file->file_name,O_RDONLY);
+    
     if(file->fd == -1)
     {
         perror("Open File Failed:");

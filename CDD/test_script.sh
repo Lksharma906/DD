@@ -59,6 +59,8 @@ watch_driver(){
 		read
 		cat /proc/modules
 		read
+
+
 	fi
 }
 
@@ -77,6 +79,72 @@ clean_driver(){
 	fi
 }
 
+build_app(){
+	echo
+	read -n1 -p "Do you want to build app(y/n)?"
+	if [ $REPLY = 'y' ]
+	then
+		cd ./app
+		echo "Building app............"
+		if ( make )
+		then
+			echo "App Build Successfully"
+		else
+			echo "App Build Failed"
+			read
+		fi
+		cd ..
+	
+	fi
+}
+
+test_driver(){
+	echo
+	read -n1 -p "Do you want to test driver(y/n)?"
+	if [ $REPLY = 'y' ]
+	then
+		cd ./app
+		read -p "Enter Major No of driver:" mn
+		min=0
+		echo major=$mn
+		echo minor=$min
+		mknod -m 666 ./DD c $mn $min
+		ls -al
+		read
+		if ( ./app DD )
+		then
+			echo "App executed successfully"
+		else
+			echo "App execution failed"
+			read
+		fi
+		unlink DD
+		ls -al
+		read
+		cd ..
+
+	fi
+
+}
+
+clean_app(){
+	echo
+	read -n1 -p "Do you want to clean app(y/n)?"
+	if [ $REPLY = 'y' ]
+	then
+		cd ./app
+		if ( make clean )
+		then
+			echo " Clean Successfull "
+		else
+			echo " Clean Failed "
+			read
+		fi
+		cd ..
+	fi
+
+}
+
 main_menu(){
     echo 	
     echo "Welcome to Driver testing"
@@ -85,6 +153,9 @@ main_menu(){
     echo "3. Watch Module  "
     echo "4. Remove Module "
     echo "5. Clean Driver  "
+    echo "6. Build Application "
+    echo "7. Test Driver with App "
+    echo "8. Clean Application "
     echo "0. Exit          "   
     read -n1 choice
     return $choice    
@@ -109,6 +180,15 @@ do
 			;;
 		5)
 			clean_driver
+			;;
+		6)
+			build_app
+			;;
+		7)
+			test_driver
+			;;
+		8)
+			clean_app
 			;;
 		0)
 			exit
